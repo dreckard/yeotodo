@@ -6,6 +6,7 @@
 'use strict';
 import Thing from '../api/thing/thing.model';
 import User from '../api/user/user.model';
+import List from '../api/list/list.model';
 
 Thing.find({}).removeAsync()
   .then(() => {
@@ -53,7 +54,22 @@ User.find({}).removeAsync()
       email: 'admin@example.com',
       password: 'admin'
     })
-    .then(() => {
+    .then((users) => {
+      List.createAsync({
+          owner: users[0]._id,
+          name: 'Test List'
+      }).then((list) => {
+          users[0].lists.push(list._id);
+          users[0].save();
+      });
       console.log('finished populating users');
     });
   });
+List.find({}).removeAsync();
+    /*User.find({email: 'test@example.com'}).then((err,user) => {
+        List.createAsync({
+          owner: user._id,
+          name: 'Test List'
+        });
+    })
+});*/
