@@ -9,7 +9,9 @@ angular.module('adsProgrammingAssignmentApp', [
   'ngSanitize',
   'ui.router',
   'ui.bootstrap',
-  'validation.match'
+  'validation.match',
+  'focus-if',
+  'puElasticInput'
 ])
   .config(function($urlRouterProvider, $locationProvider) {
     $urlRouterProvider

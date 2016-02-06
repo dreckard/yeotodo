@@ -3,40 +3,40 @@
 var app = require('../..');
 import request from 'supertest';
 
-var newList;
+var newTodo;
 
-describe('List API:', function() {
+describe('Todo API:', function() {
 
-  describe('GET /api/lists', function() {
-    var lists;
+  describe('GET /api/todo', function() {
+    var todos;
 
     beforeEach(function(done) {
       request(app)
-        .get('/api/lists')
+        .get('/api/todo')
         .expect(200)
         .expect('Content-Type', /json/)
         .end((err, res) => {
           if (err) {
             return done(err);
           }
-          lists = res.body;
+          todos = res.body;
           done();
         });
     });
 
     it('should respond with JSON array', function() {
-      lists.should.be.instanceOf(Array);
+      todos.should.be.instanceOf(Array);
     });
 
   });
 
-  describe('POST /api/lists', function() {
+  describe('POST /api/todo', function() {
     beforeEach(function(done) {
       request(app)
-        .post('/api/lists')
+        .post('/api/todo')
         .send({
-          name: 'New List',
-          info: 'This is the brand new list!!!'
+          name: 'New Todo',
+          info: 'This is the brand new todo!!!'
         })
         .expect(201)
         .expect('Content-Type', /json/)
@@ -44,55 +44,55 @@ describe('List API:', function() {
           if (err) {
             return done(err);
           }
-          newList = res.body;
+          newTodo = res.body;
           done();
         });
     });
 
-    it('should respond with the newly created list', function() {
-      newList.name.should.equal('New List');
-      newList.info.should.equal('This is the brand new list!!!');
+    it('should respond with the newly created todo', function() {
+      newTodo.name.should.equal('New Todo');
+      newTodo.info.should.equal('This is the brand new todo!!!');
     });
 
   });
 
-  describe('GET /api/lists/:id', function() {
-    var list;
+  describe('GET /api/todo/:id', function() {
+    var todo;
 
     beforeEach(function(done) {
       request(app)
-        .get('/api/lists/' + newList._id)
+        .get('/api/todo/' + newTodo._id)
         .expect(200)
         .expect('Content-Type', /json/)
         .end((err, res) => {
           if (err) {
             return done(err);
           }
-          list = res.body;
+          todo = res.body;
           done();
         });
     });
 
     afterEach(function() {
-      list = {};
+      todo = {};
     });
 
-    it('should respond with the requested list', function() {
-      list.name.should.equal('New List');
-      list.info.should.equal('This is the brand new list!!!');
+    it('should respond with the requested todo', function() {
+      todo.name.should.equal('New Todo');
+      todo.info.should.equal('This is the brand new todo!!!');
     });
 
   });
 
-  describe('PUT /api/lists/:id', function() {
-    var updatedList;
+  describe('PUT /api/todo/:id', function() {
+    var updatedTodo;
 
     beforeEach(function(done) {
       request(app)
-        .put('/api/lists/' + newList._id)
+        .put('/api/todo/' + newTodo._id)
         .send({
-          name: 'Updated List',
-          info: 'This is the updated list!!!'
+          name: 'Updated Todo',
+          info: 'This is the updated todo!!!'
         })
         .expect(200)
         .expect('Content-Type', /json/)
@@ -100,27 +100,27 @@ describe('List API:', function() {
           if (err) {
             return done(err);
           }
-          updatedList = res.body;
+          updatedTodo = res.body;
           done();
         });
     });
 
     afterEach(function() {
-      updatedList = {};
+      updatedTodo = {};
     });
 
-    it('should respond with the updated list', function() {
-      updatedList.name.should.equal('Updated List');
-      updatedList.info.should.equal('This is the updated list!!!');
+    it('should respond with the updated todo', function() {
+      updatedTodo.name.should.equal('Updated Todo');
+      updatedTodo.info.should.equal('This is the updated todo!!!');
     });
 
   });
 
-  describe('DELETE /api/lists/:id', function() {
+  describe('DELETE /api/todo/:id', function() {
 
     it('should respond with 204 on successful removal', function(done) {
       request(app)
-        .delete('/api/lists/' + newList._id)
+        .delete('/api/todo/' + newTodo._id)
         .expect(204)
         .end((err, res) => {
           if (err) {
@@ -130,9 +130,9 @@ describe('List API:', function() {
         });
     });
 
-    it('should respond with 404 when list does not exist', function(done) {
+    it('should respond with 404 when todo does not exist', function(done) {
       request(app)
-        .delete('/api/lists/' + newList._id)
+        .delete('/api/todo/' + newTodo._id)
         .expect(404)
         .end((err, res) => {
           if (err) {

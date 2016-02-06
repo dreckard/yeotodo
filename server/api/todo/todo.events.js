@@ -1,15 +1,15 @@
 /**
- * List model events
+ * Todo model events
  */
 
 'use strict';
 
 import {EventEmitter} from 'events';
-var List = require('./list.model');
-var ListEvents = new EventEmitter();
+var Todo = require('./todo.model');
+var TodoEvents = new EventEmitter();
 
 // Set max event listeners (0 == unlimited)
-ListEvents.setMaxListeners(0);
+TodoEvents.setMaxListeners(0);
 
 // Model events
 var events = {
@@ -20,14 +20,14 @@ var events = {
 // Register the event emitter to the model events
 for (var e in events) {
   var event = events[e];
-  List.schema.post(e, emitEvent(event));
+  Todo.schema.post(e, emitEvent(event));
 }
 
 function emitEvent(event) {
   return function(doc) {
-    ListEvents.emit(event + ':' + doc._id, doc);
-    ListEvents.emit(event, doc);
+    TodoEvents.emit(event + ':' + doc._id, doc);
+    TodoEvents.emit(event, doc);
   }
 }
 
-export default ListEvents;
+export default TodoEvents;

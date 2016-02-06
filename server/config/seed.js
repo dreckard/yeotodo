@@ -6,7 +6,6 @@
 'use strict';
 import Thing from '../api/thing/thing.model';
 import User from '../api/user/user.model';
-import List from '../api/list/list.model';
 
 Thing.find({}).removeAsync()
   .then(() => {
@@ -46,7 +45,25 @@ User.find({}).removeAsync()
       provider: 'local',
       name: 'Test User',
       email: 'test@example.com',
-      password: 'test'
+      password: 'test',
+      todo: [{ 
+                name: 'Moving',
+                items: [
+                    { name: 'Buy ticket',
+                      completed: true },
+                    { name: 'Find job',
+                      completed: false }
+                ]
+              },
+            { 
+                name: 'Päivällinen',
+                items: [
+                    { name: 'Kurkku',
+                      completed: false },
+                    { name: 'Pasta',
+                      completed: true }
+                ]
+              }]
     }, {
       provider: 'local',
       role: 'admin',
@@ -55,21 +72,6 @@ User.find({}).removeAsync()
       password: 'admin'
     })
     .then((users) => {
-      List.createAsync({
-          owner: users[0]._id,
-          name: 'Test List'
-      }).then((list) => {
-          users[0].lists.push(list._id);
-          users[0].save();
-      });
       console.log('finished populating users');
     });
   });
-List.find({}).removeAsync();
-    /*User.find({email: 'test@example.com'}).then((err,user) => {
-        List.createAsync({
-          owner: user._id,
-          name: 'Test List'
-        });
-    })
-});*/

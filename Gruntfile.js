@@ -187,7 +187,7 @@ module.exports = function (grunt) {
         options: {
           'web-host': 'localhost',
           'preload': false,
-          'hidden': ['node_modules']
+          'hidden': ['node_modules','public','.git','.idea','.tmp','client/bower_components','dist','coverage']
         }
       }
     },

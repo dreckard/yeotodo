@@ -4,6 +4,16 @@ import crypto from 'crypto';
 var mongoose = require('bluebird').promisifyAll(require('mongoose'));
 import {Schema} from 'mongoose';
 
+var TodoItemSchema = new mongoose.Schema({
+  name: String,
+  completed: Boolean
+});
+
+var TodoListSchema = new mongoose.Schema({
+  name: String,
+  items: [TodoItemSchema]
+});
+
 var UserSchema = new Schema({
   name: String,
   email: {
@@ -17,7 +27,7 @@ var UserSchema = new Schema({
   password: String,
   provider: String,
   salt: String,
-  lists: [{ type: Schema.Types.ObjectId, ref: 'List' }]
+  todo: [TodoListSchema]
 });
 
 /**

@@ -6,26 +6,73 @@
   </div>
 </header>-->
 
+<style type="text/css">
+  form.tab-form-demo .tab-pane {
+    margin: 20px 20px;
+  }
+  .completed {
+      text-decoration: line-through;
+    }
+  input[type="checkbox"] {
+      margin-right: 5px;
+    }
+  span.close {
+      text-align: center;
+    }
+  div.todo-item:first-of-type {
+      margin-top: 10px;
+    }
+  .tab-header-icon {
+      visibility: hidden;
+      margin-left: 5px;
+    }
+  .header-text {
+      border: 0;
+      outline: none;
+      background-color: transparent;
+    }
+  .tab-header:hover .tab-header-icon,
+  .tab-header.active > a > uib-tab-heading > i.tab-header-icon {
+      visibility: visible;
+      cursor: pointer;
+    }
+  .tab-header > a > uib-tab-heading > input.header-text {
+      cursor: pointer;
+    }
+  .tab-header.active > a > uib-tab-heading > input.header-text {
+      cursor: text;
+    }
+  .tab-new-icon {
+      color: black;
+    }
+  .new-item-input {
+      min-width: 150px;
+      max-width: 100%;
+    }
+</style>
+
 <div ng-controller="MainController" class="container">
-  Tabs using nested forms:
-  <form name="outerForm" class="tab-form-demo">
     <uib-tabset>
-      <uib-tab heading="Form Tab">
-        <ng-form name="nestedForm">
-          <div class="form-group">
-            <label>Name</label>
-            <input type="text" class="form-control" required ng-model="model.name"/>
-          </div>
-        </ng-form>
+      <uib-tab class="tab-header" ng-repeat="todo in main.todo" active="todo.active">
+        <uib-tab-heading>
+            <input type="text" class="header-text" ng-model="todo.name" pu-elastic-input ng-readonly="!todo.active" ng-keypress="$event.which === 13 && main.updateTodo(todo)"/><i class="tab-header-icon glyphicon glyphicon-remove" ng-click="main.deleteTodo(todo)"></i>
+        </uib-tab-heading>
+        <div class="todo-item row" ng-repeat="item in todo.items">
+            <label ng-class="{completed: item.completed}" class="col-xs-10 col-sm-11"><input type="checkbox" ng-model="item.completed" ng-change="main.toggleTodoItem(todo,item)">{{item.name}}</label>
+            <span class="col-xs-2 col-sm-1 close" ng-click="main.deleteTodoItem(todo,item)">x</span>
+        </div>
+        <div class="new-item-group row col-xs-10 col-sm-11">
+            <!-- Keycode 13 is enter -->
+            <input focus-if pu-elastic-input type="text" class="new-item-input form-control" placeholder="Add item..." ng-model="main.newTodoItem" ng-keypress="$event.which === 13 && main.pushTodoItem(todo)"/>
+        </div>
       </uib-tab>
-      <uib-tab heading="Tab One">
-        Some Tab Content
-      </uib-tab>
-      <uib-tab heading="Tab Two">
-        More Tab Content
+      <uib-tab ng-click="main.createTodo('New List')" active='false'>
+          <uib-tab-heading>
+            <i class="tab-new-icon glyphicon glyphicon-plus"></i>
+          </uib-tab-heading>
       </uib-tab>
     </uib-tabset>
-  </form>
+    
   <!--<div class="row">
     <div class="col-lg-12">
       <h1 class="page-header">Features:</h1>

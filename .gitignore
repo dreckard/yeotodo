@@ -9,3 +9,6 @@ npm-debug.log
 coverage
 .brackets.*
 *~
+mocha.conf.js
+karma.conf.js
+
