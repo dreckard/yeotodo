@@ -48,10 +48,9 @@ class MainController {
   updateTodo(todo) {
       //Update name only
       this.$http.put('/api/todo/' + todo._id, { name: todo.name })
-        .then( todo => { this.refreshTodo(todo._id) });
+        .then( () => { this.refreshTodo(todo._id) });
   }
   deleteTodo(todo) {
-      this.todo[0].active = true;
       this.$http.delete('/api/todo/' + todo._id)
         .then( () => { this.refreshTodo() });
   }
