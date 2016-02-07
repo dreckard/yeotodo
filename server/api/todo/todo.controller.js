@@ -60,11 +60,9 @@ export function create(req, res) {
     .then( usr => {
       var new_todo = usr.todo.create({ name: req.body.name, items: [] });
       usr.todo.push(new_todo);
-      usr.saveAsync()
-        .then( 
-          db_resp => { 
+      usr.saveAsync().then( db_resp => { 
             res.status(201).json(db_resp[0].todo.id(new_todo.id));
-          })
+        })
         .catch(handleError(res));
   })
   .catch(handleError(res));
@@ -106,11 +104,13 @@ export function destroy(req, res) {
 export function create_item(req,res) {
   User.findByIdAsync(req.user._id, 'todo')
     .then(usr => {
-      //Merge in the updates to the targeted item then push them back to the db
-      usr.todo.id(req.params.id).items.push(req.body);
-      usr.saveAsync()
-          .then(respondWithResult(res,201))
-          .catch(handleError(res));
+      var newTodoItem = usr.todo.id(req.params.id).items.create(req.body);
+      usr.todo.id(req.params.id).items.push(newTodoItem);
+      
+      usr.saveAsync().then( db_resp => { 
+            res.status(201).json(db_resp[0].todo.id(req.params.id).items.id(newTodoItem.id));
+         })
+         .catch(handleError(res));
   })
   .catch(handleError(res));
 }
@@ -120,9 +120,10 @@ export function update_item(req, res) {
     .then(usr => {
       //Merge in the updates to the targeted item then push them back to the db
       _.merge(usr.todo.id(req.params.id).items.id(req.params.item_id), req.body);
-      usr.saveAsync()
-          .then(respondWithResult(res))
-          .catch(handleError(res));
+      usr.saveAsync().then( db_resp => { 
+            res.status(200).json(db_resp[0].todo.id(req.params.id).items.id(req.params.item_id));
+         })
+         .catch(handleError(res));
   })
   .catch(handleError(res));
 }
@@ -130,9 +131,15 @@ export function update_item(req, res) {
 export function destroy_item(req,res) {
   User.findByIdAsync(req.user._id, 'todo')
     .then( usr => {
+      //Return 404 if the requested ID doesn't exist
+      if ( !usr.todo.id(req.params.id).items.id(req.params.item_id) ) {
+          res.status(404).end();
+          return;
+      }
+      
       usr.todo.id(req.params.id).items.pull(req.params.item_id);
       usr.saveAsync()
-        .then(respondWithResult(res))
+        .then(respondWithResult(res,204))
         .catch(handleError(res));
   })
   .catch(handleError(res));
