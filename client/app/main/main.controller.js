@@ -10,10 +10,6 @@ class MainController {
     this.todo = [];
     this.newTodoItem = "";
     
-    $http.get('/api/things').then(response => {
-      this.awesomeThings = response.data;
-    });
-    
     this.refreshTodo();
   }
     
@@ -41,8 +37,8 @@ class MainController {
   }
   createTodo(name) {
       this.$http.post('/api/todo', { name: name })
-        .then( todo => { 
-          this.refreshTodo(todo._id);
+        .then( resp => { 
+          this.refreshTodo(resp.data._id);
       });
   }
   updateTodo(todo) {
