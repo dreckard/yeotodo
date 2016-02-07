@@ -7,77 +7,122 @@ class MainController {
   constructor($http,$scope) {
     this.$http = $http;
     this.awesomeThings = [];
-    this.todo = [];
+    this.todo = [];  // Client's todo data
+    this.todo_sv = []; // Server's todo data
     this.newTodoItem = "";
     
     this.refreshTodo();
   }
     
+  handleNetworkError(action) {
+      return ( function(err) { 
+          if ( !action )
+              action = 'saving data';
+          alert('Error ' + action + '\n' + err.status + ' ' + err.statusText);
+      });
+  }
+   
+  getActiveTodoId() {
+      if ( this.todo ) {
+          var active = _.find(this.todo, obj => { return obj.active });
+          if ( active )
+              return active._id;
+      }
+      return "";
+  }
+    
+  getTodoByIdSv(id) {
+      if ( this.todo_sv ) {
+          return _.find(this.todo_sv, obj => { return obj._id == id });
+      }
+      return null;
+  }
+    
   refreshTodo(selected_id) {
-      this.$http.get('/api/todo').then(response => {
-          //Iterate the response and restore the user to the same tab if applicable
+      this.newTodoItem = "";
+      return this.$http.get('/api/todo').then(response => {
+          //Navigate to a particular tab if supplied, otherwise default to the first
           if ( response.data.length > 0 ) {
               if ( selected_id ) {
-                  for (var i=0;i<response.data.length;i++) {
-                      if ( response.data[i]._id == selected_id ) {
-                          response.data[i].active = true;
-                          break;
-                      }
-                  }
+                  var selected_todo = _.find(response.data, obj => { return obj._id == selected_id });
+                  if ( selected_todo )
+                      selected_todo.active = true;
               }
               else {
-                  //response.data[0].active = true;
-                  response.data[response.data.length-1].active = true; //Select the last tab
+                  response.data[0].active = true;
               }
           }
           
+          //Make a deep copy for reference so we don't send redundant updates
+          this.todo_sv = angular.copy(response.data);
           this.todo = response.data;
-        });
-      this.newTodoItem = "";
+        })
+        .catch(this.handleNetworkError('refreshing data'));
   }
+    
   createTodo(name) {
       this.$http.post('/api/todo', { name: name })
         .then( resp => { 
           this.refreshTodo(resp.data._id);
-      });
+        })
+        .catch(this.handleNetworkError());
   }
+    
   updateTodo(todo) {
-      //Update name only
-      this.$http.put('/api/todo/' + todo._id, { name: todo.name })
-        .then( () => { this.refreshTodo(todo._id) });
+      //This gets called from ng-blur and ng-keydown for the enter key regardless of whether the underlying data has changed
+      //First verify that the name has indeed changed then send the update
+      var todo_sv = this.getTodoByIdSv(todo._id);
+      if ( todo_sv && todo_sv.name !== todo.name ) {
+          return this.$http.put('/api/todo/' + todo._id, { name: todo.name })
+            .then( () => { this.refreshTodo(todo._id) })
+            .catch(this.handleNetworkError());
+      }
+      return Promise.resolve();
   }
+    
   deleteTodo(todo) {
-      this.$http.delete('/api/todo/' + todo._id)
-        .then( () => { this.refreshTodo() });
+      //If deleting a list other than the currently selected one then the active page needs to be maintained
+      var activeTodoId = this.getActiveTodoId();
+      return this.$http.delete('/api/todo/' + todo._id)
+        .then( () => { this.refreshTodo(activeTodoId) })
+        .catch(this.handleNetworkError());
   }
-
+    
   pushTodoItem(todo) {
       if ( this.newTodoItem.length > 0 ) {
-        this.$http.post('/api/todo/' + todo._id, { name: this.newTodoItem, completed: false } )
+        return this.$http.post('/api/todo/' + todo._id, { name: this.newTodoItem, completed: false } )
           .then( () => { 
             this.refreshTodo(todo._id);
-        });
+          })
+          .catch(this.handleNetworkError());
       }
+      return Promise.resolve();
   }
-  deleteTodoItem(todo,item) {
-      this.$http.delete('/api/todo/' + todo._id + '/' + item._id)
-        .then( () => { this.refreshTodo(todo._id) });
+    
+  deleteTodoItem(todo,item,deferRefresh) {
+      return this.$http.delete('/api/todo/' + todo._id + '/' + item._id)
+        .then( () => { 
+          if ( !deferRefresh )
+              this.refreshTodo(todo._id) 
+        })
+        .catch(this.handleNetworkError());
   }
-
+    
   toggleTodoItem(todo,item) {
-      this.$http.put('/api/todo/' + todo._id + '/' + item._id, { completed: item.completed } );
+      return this.$http.put('/api/todo/' + todo._id + '/' + item._id, { completed: item.completed } )
+        .catch(this.handleNetworkError());
   }
-
-  addThing() {
-    if (this.newThing) {
-      this.$http.post('/api/things', { name: this.newThing });
-      this.newThing = '';
-    }
-  }
-
-  deleteThing(thing) {
-    this.$http.delete('/api/things/' + thing._id);
-  }
+  clearCompletedTodoItems(todo) {
+      var promises = [];
+      
+      //Run all the DELETEs and combine the promises and 
+      _.where(todo.items, { completed: true }).forEach( item => {
+          promises.push(this.deleteTodoItem(todo,item,true));
+      });
+      
+      Promise.all(promises).then( () => {
+          this.refreshTodo(todo._id);
+      });
 }
 
 angular.module('adsProgrammingAssignmentApp')
