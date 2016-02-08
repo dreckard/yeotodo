@@ -12,38 +12,6 @@ describe('Main View', function () {
         password: 'test'
     };
 
-    /*var testUser = {
-        name: 'Fake User',
-        email: 'test@example.com',
-        password: 'password',
-        todo: [{
-                name: 'Fake Todo List 1',
-                items: [
-                    {
-                        name: 'Fake Item (Complete)',
-                        completed: true
-                    },
-                    {
-                        name: 'Fake Item (Incomplete)',
-                        completed: false
-                    }
-                ]
-              },
-            {
-                name: 'Fake Todo List 2',
-                items: [
-                    {
-                        name: 'Fake Item (Incomplete)',
-                        completed: false
-                    },
-                    {
-                        name: 'Fake Item (Complete)',
-                        completed: true
-                    }
-                ]
-              }]
-    };*/
-
     beforeAll(function (done) {
         UserModel.removeAsync()
             .then(function () {
@@ -57,12 +25,6 @@ describe('Main View', function () {
                     });
             });
     });
-
-    /*it('should include jumbotron with correct data', function() {
-      expect(page.h1El.getText()).toBe('\'Allo, \'Allo!');
-      expect(page.imgEl.getAttribute('src')).toMatch(/yeoman.png$/);
-      expect(page.imgEl.getAttribute('alt')).toBe('I\'m Yeoman');
-    });*/
 
     it('should contain only the new todo button to start', function () {
         expect(browser.getCurrentUrl()).toBe(config.baseUrl + '/');

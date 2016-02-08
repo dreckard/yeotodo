@@ -4,9 +4,9 @@
 
     class MainController {
 
-        constructor($http, $scope) {
+        constructor($http, $q, $scope) {
             this.$http = $http;
-            this.awesomeThings = [];
+            this.$q = $q;
             this.todo = []; // Client's todo data
             this.todo_sv = []; // Server's todo data
             this.newTodoItem = "";
@@ -53,6 +53,8 @@
                             });
                             if (selected_todo)
                                 selected_todo.active = true;
+                            else
+                                response.data[0].active = true;
                         } else {
                             response.data[0].active = true;
                         }
@@ -66,11 +68,11 @@
         }
 
         createTodo(name) {
-            this.$http.post('/api/todo', {
+            return this.$http.post('/api/todo', {
                     name: name
                 })
                 .then(resp => {
-                    this.refreshTodo(resp.data._id);
+                    return this.refreshTodo(resp.data._id);
                 })
                 .catch(this.handleNetworkError());
         }
@@ -79,16 +81,16 @@
             //This gets called from ng-blur and ng-keydown for the enter key regardless of whether the underlying data has changed
             //First verify that the name has indeed changed then send the update
             var todo_sv = this.getTodoByIdSv(todo._id);
-            if (todo_sv && todo_sv.name !== todo.name) {
+            if (!todo_sv || todo_sv.name !== todo.name) {
                 return this.$http.put('/api/todo/' + todo._id, {
                         name: todo.name
                     })
-                    .then(() => {
-                        this.refreshTodo(todo._id)
+                    .then(resp => {
+                        return this.refreshTodo(todo._id);
                     })
                     .catch(this.handleNetworkError());
             }
-            return Promise.resolve();
+            return this.$q.resolve();
         }
 
         deleteTodo(todo) {
@@ -96,7 +98,7 @@
             var activeTodoId = this.getActiveTodoId();
             return this.$http.delete('/api/todo/' + todo._id)
                 .then(() => {
-                    this.refreshTodo(activeTodoId)
+                    return this.refreshTodo(activeTodoId)
                 })
                 .catch(this.handleNetworkError());
         }
@@ -108,18 +110,18 @@
                         completed: false
                     })
                     .then(() => {
-                        this.refreshTodo(todo._id);
+                        return this.refreshTodo(todo._id);
                     })
                     .catch(this.handleNetworkError());
             }
-            return Promise.resolve();
+            return this.$q.resolve();
         }
 
         deleteTodoItem(todo, item, deferRefresh) {
             return this.$http.delete('/api/todo/' + todo._id + '/' + item._id)
                 .then(() => {
                     if (!deferRefresh)
-                        this.refreshTodo(todo._id)
+                        return this.refreshTodo(todo._id)
                 })
                 .catch(this.handleNetworkError());
         }
@@ -140,8 +142,8 @@
                 promises.push(this.deleteTodoItem(todo, item, true));
             });
 
-            Promise.all(promises).then(() => {
-                this.refreshTodo(todo._id);
+            this.$q.all(promises).then(() => {
+                return this.refreshTodo(todo._id);
             });
         }
 

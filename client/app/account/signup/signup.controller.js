@@ -21,8 +21,15 @@ class SignupController {
                     email: this.user.email,
                     password: this.user.password,
                     todo: {
-                        name: 'New List',
-                        items: []
+                        name: 'Welcome',
+                        items: [{
+                                name: 'Sign up for this todo application',
+                                completed: true
+                            },
+                            {
+                                name: 'Start creating lists and items now',
+                                completed: false
+                            }]
                     }
                 })
                 .then(() => {

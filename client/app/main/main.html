@@ -6,7 +6,7 @@
                 <input type="text" class="header-text" maxlength=64 pu-elastic-input ng-model="todo.name" ng-readonly="!todo.active" ng-blur="main.updateTodo(todo)" ng-keypress="$event.which === 13 && main.updateTodo(todo)" /><i class="tab-header-closebtn glyphicon glyphicon-remove" ng-click="main.deleteTodo(todo)"></i>
             </uib-tab-heading>
             <div class="checkbox todo-item row" ng-repeat="item in todo.items">
-                <label class="todo-item-labelcol-xs-10 col-sm-11" ng-class="{completed: item.completed}">
+                <label class="todo-item-label col-xs-10 col-sm-11" ng-class="{completed: item.completed}">
                     <input type="checkbox" ng-model="item.completed" ng-change="main.toggleTodoItem(todo,item)">{{item.name}}</label>
                 <span class="col-xs-2 col-sm-1 close" ng-click="main.deleteTodoItem(todo,item)">x</span>
             </div>
