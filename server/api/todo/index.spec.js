@@ -7,7 +7,10 @@ var todoCtrlStub = {
   show: 'todoCtrl.show',
   create: 'todoCtrl.create',
   update: 'todoCtrl.update',
-  destroy: 'todoCtrl.destroy'
+  destroy: 'todoCtrl.destroy',
+  create_item: 'todoCtrl.create_item',
+  update_item: 'todoCtrl.update_item',
+  destroy_item: 'todoCtrl.destroy_item'
 };
 
 var authServiceStub = {
@@ -89,6 +92,46 @@ describe('Todo API Router:', function() {
     it('should route to todo.controller.update', function() {
       routerStub.patch
         .withArgs('/:id', 'authService.isAuthenticated', 'todoCtrl.update')
+        .should.have.been.calledOnce;
+    });
+
+  });
+    
+  describe('POST /api/todo/:id', function() {
+
+    it('should route to todo.controller.create_item', function() {
+      routerStub.post
+        .withArgs('/:id', 'authService.isAuthenticated', 'todoCtrl.create_item')
+        .should.have.been.calledOnce;
+    });
+      
+  });
+    
+  describe('PUT /api/todo/:id/:item_id', function() {
+
+    it('should route to todo.controller.update_item', function() {
+      routerStub.put
+        .withArgs('/:id/:item_id', 'authService.isAuthenticated', 'todoCtrl.update_item')
+        .should.have.been.calledOnce;
+    });
+
+  });
+
+  describe('PATCH /api/todo/:id/:item_id', function() {
+
+    it('should route to todo.controller.update_item', function() {
+      routerStub.patch
+        .withArgs('/:id/:item_id', 'authService.isAuthenticated', 'todoCtrl.update_item')
+        .should.have.been.calledOnce;
+    });
+
+  });
+    
+  describe('DELETE /api/todo/:id/:item_id', function() {
+
+    it('should route to todo.controller.destroy_item', function() {
+      routerStub.delete
+        .withArgs('/:id/:item_id', 'authService.isAuthenticated', 'todoCtrl.destroy_item')
         .should.have.been.calledOnce;
     });
 

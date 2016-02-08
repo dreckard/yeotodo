@@ -24,7 +24,7 @@ describe('Controller: MainController', function() {
     });
   }));
 
-  it('should attach a list of things to the controller', function() {
+  it('should attach a list of todos to the controller', function() {
     $httpBackend.flush();
     expect(MainController.todo.length).toBeGreaterThan(0);
   });

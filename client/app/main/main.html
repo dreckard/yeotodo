@@ -1,23 +1,24 @@
 <div ng-controller="MainController" class="container todo-container">
     <uib-tabset>
-      <uib-tab class="tab-header" ng-repeat="todo in main.todo" active="todo.active">
-        <uib-tab-heading>
-            <!-- Keycode 13 is enter -->
-            <input type="text" class="header-text" maxlength=64 pu-elastic-input ng-model="todo.name" ng-readonly="!todo.active" ng-blur="main.updateTodo(todo)" ng-keypress="$event.which === 13 && main.updateTodo(todo)"/><i class="tab-header-icon glyphicon glyphicon-remove" ng-click="main.deleteTodo(todo)"></i>
-        </uib-tab-heading>
-        <div class="todo-item row" ng-repeat="item in todo.items">
-            <label ng-class="{completed: item.completed}" class="col-xs-10 col-sm-11"><input type="checkbox" ng-model="item.completed" ng-change="main.toggleTodoItem(todo,item)">{{item.name}}</label>
-            <span class="col-xs-2 col-sm-1 close" ng-click="main.deleteTodoItem(todo,item)">x</span>
-        </div>
-        <div class="new-item-group row col-xs-10 col-sm-11">
-            <input type="text" class="new-item-input form-control" placeholder="Add item..." maxlength=255 pu-elastic-input focus-if ng-model="main.newTodoItem" ng-blur="main.pushTodoItem(todo)" ng-keypress="$event.which === 13 && main.pushTodoItem(todo)"/>
-        </div>
-        <div class="col-xs-12 clear-completed" ng-click="main.clearCompletedTodoItems(todo)">Clear completed</div>
-      </uib-tab>
-      <uib-tab ng-click="main.createTodo('New List')" active="false">
-          <uib-tab-heading>
-            <i class="tab-new-icon glyphicon glyphicon-plus"></i>
-          </uib-tab-heading>
-      </uib-tab>
+        <uib-tab class="tab-header" ng-repeat="todo in main.todo" active="todo.active">
+            <uib-tab-heading>
+                <!-- Keycode 13 is enter -->
+                <input type="text" class="header-text" maxlength=64 pu-elastic-input ng-model="todo.name" ng-readonly="!todo.active" ng-blur="main.updateTodo(todo)" ng-keypress="$event.which === 13 && main.updateTodo(todo)" /><i class="tab-header-closebtn glyphicon glyphicon-remove" ng-click="main.deleteTodo(todo)"></i>
+            </uib-tab-heading>
+            <div class="checkbox todo-item row" ng-repeat="item in todo.items">
+                <label class="todo-item-labelcol-xs-10 col-sm-11" ng-class="{completed: item.completed}">
+                    <input type="checkbox" ng-model="item.completed" ng-change="main.toggleTodoItem(todo,item)">{{item.name}}</label>
+                <span class="col-xs-2 col-sm-1 close" ng-click="main.deleteTodoItem(todo,item)">x</span>
+            </div>
+            <div class="new-item-group row col-xs-10 col-sm-11">
+                <input type="text" class="new-item-input form-control" placeholder="Add item..." maxlength=255 pu-elastic-input focus-if ng-model="main.newTodoItem" ng-blur="main.pushTodoItem(todo)" ng-keypress="$event.which === 13 && main.pushTodoItem(todo)" />
+            </div>
+            <div class="col-xs-12 clear-completed" ng-click="main.clearCompletedTodoItems(todo)">Clear completed</div>
+        </uib-tab>
+        <uib-tab class="tab-new-todo" ng-click="main.createTodo('New List')" active="false">
+            <uib-tab-heading>
+                <i class="tab-new-icon glyphicon glyphicon-plus"></i>
+            </uib-tab-heading>
+        </uib-tab>
     </uib-tabset>
 </div>

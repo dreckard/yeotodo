@@ -1,56 +1,71 @@
 .navbar-text {
-  margin-left: 15px;
+    margin-left: 15px;
 }
+
 form.tab-form-demo .tab-pane {
-  margin: 20px 20px;
+    margin: 20px 20px;
 }
+
 .completed {
-  text-decoration: line-through;
+    text-decoration: line-through;
 }
+
 input[type="checkbox"] {
-  margin-right: 5px;
+    margin-right: 5px;
 }
+
 span.close {
-  text-align: center;
+    text-align: center;
 }
+
 div.todo-item:first-of-type {
-  margin-top: 10px;
+    margin-top: 10px;
 }
-.tab-header-icon {
-  visibility: hidden;
-  margin-left: 5px;
+
+.tab-header-closebtn {
+    visibility: hidden;
+    margin-left: 5px;
 }
+
 .header-text {
-  border: 0;
-  outline: none;
-  background-color: transparent;
+    border: 0;
+    outline: none;
+    background-color: transparent;
 }
-.tab-header:hover .tab-header-icon,
-.tab-header.active > a > uib-tab-heading > i.tab-header-icon {
-  visibility: visible;
-  cursor: pointer;
+
+.tab-header:hover i.tab-header-closebtn,
+.tab-header.active > a > uib-tab-heading > i.tab-header-closebtn {
+    visibility: visible;
+    cursor: pointer;
 }
+
 .tab-header > a > uib-tab-heading > input.header-text {
-  cursor: pointer;
+    cursor: pointer;
 }
+
 .tab-header.active > a > uib-tab-heading > input.header-text {
-  cursor: text;
+    cursor: text;
 }
+
 .tab-new-icon {
-  color: black;
+    color: black;
 }
+
 .todo-container {
     border-bottom: 1px solid #ddd;
     padding-bottom: 5px;
 }
+
 .new-item-input {
-  min-width: 150px;
-  max-width: 100%;
+    min-width: 150px;
+    max-width: 100%;
 }
+
 .clear-completed {
     text-align: right;
     cursor: pointer;
 }
+
 .clear-completed:hover {
     text-decoration: underline;
 }
