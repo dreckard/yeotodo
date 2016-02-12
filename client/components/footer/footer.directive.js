@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('adsProgrammingAssignmentApp')
+angular.module('yeoTodoApp')
   .directive('footer', function() {
     return {
       templateUrl: 'components/footer/footer.html',

@@ -3,7 +3,7 @@
 describe('Controller: MainController', function () {
 
     // load the controller's module
-    beforeEach(module('adsProgrammingAssignmentApp'));
+    beforeEach(module('yeoTodoApp'));
     beforeEach(module('stateMock'));
 
     var scope;

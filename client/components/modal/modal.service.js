@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('adsProgrammingAssignmentApp')
+angular.module('yeoTodoApp')
   .factory('Modal', function($rootScope, $modal) {
     /**
      * Opens a modal

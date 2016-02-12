@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('adsProgrammingAssignmentApp.admin', [
-  'adsProgrammingAssignmentApp.auth',
+angular.module('yeoTodoApp.admin', [
+  'yeoTodoApp.auth',
   'ui.router'
 ]);

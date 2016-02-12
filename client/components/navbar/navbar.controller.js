@@ -17,5 +17,5 @@ class NavbarController {
   }
 }
 
-angular.module('adsProgrammingAssignmentApp')
+angular.module('yeoTodoApp')
   .controller('NavbarController', NavbarController);

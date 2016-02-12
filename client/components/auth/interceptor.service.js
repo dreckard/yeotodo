@@ -26,7 +26,7 @@ function authInterceptor($rootScope, $q, $cookies, $injector, Util) {
   };
 }
 
-angular.module('adsProgrammingAssignmentApp.auth')
+angular.module('yeoTodoApp.auth')
   .factory('authInterceptor', authInterceptor);
 
 })();

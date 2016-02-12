@@ -21,7 +21,7 @@ function UserResource($resource) {
   });
 }
 
-angular.module('adsProgrammingAssignmentApp.auth')
+angular.module('yeoTodoApp.auth')
   .factory('User', UserResource);
 
 })();

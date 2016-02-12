@@ -25,5 +25,5 @@ class SettingsController {
   }
 }
 
-angular.module('adsProgrammingAssignmentApp')
+angular.module('yeoTodoApp')
   .controller('SettingsController', SettingsController);

@@ -1,3 +1,3 @@
 'use strict';
 
-angular.module('adsProgrammingAssignmentApp.util', []);
+angular.module('yeoTodoApp.util', []);

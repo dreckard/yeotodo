@@ -50,5 +50,5 @@ class SignupController {
     }
 }
 
-angular.module('adsProgrammingAssignmentApp')
+angular.module('yeoTodoApp')
     .controller('SignupController', SignupController);

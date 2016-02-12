@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('adsProgrammingAssignmentApp.admin')
+angular.module('yeoTodoApp.admin')
   .config(function($stateProvider) {
     $stateProvider
       .state('admin', {

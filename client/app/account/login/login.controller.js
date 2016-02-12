@@ -29,5 +29,5 @@ class LoginController {
   }
 }
 
-angular.module('adsProgrammingAssignmentApp')
+angular.module('yeoTodoApp')
   .controller('LoginController', LoginController);

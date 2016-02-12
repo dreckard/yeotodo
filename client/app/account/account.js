@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('adsProgrammingAssignmentApp')
+angular.module('yeoTodoApp')
   .config(function($stateProvider) {
     $stateProvider
       .state('login', {

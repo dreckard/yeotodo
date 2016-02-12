@@ -183,7 +183,7 @@ function AuthService($location, $http, $cookies, $q, appConfig, Util, User) {
   return Auth;
 }
 
-angular.module('adsProgrammingAssignmentApp.auth')
+angular.module('yeoTodoApp.auth')
   .factory('Auth', AuthService);
 
 })();

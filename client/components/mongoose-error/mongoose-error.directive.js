@@ -3,7 +3,7 @@
 /**
  * Removes server error when user updates input
  */
-angular.module('adsProgrammingAssignmentApp')
+angular.module('yeoTodoApp')
   .directive('mongooseError', function() {
     return {
       restrict: 'A',

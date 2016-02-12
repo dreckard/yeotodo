@@ -59,7 +59,7 @@ function UtilService($window) {
   return Util;
 }
 
-angular.module('adsProgrammingAssignmentApp.util')
+angular.module('yeoTodoApp.util')
   .factory('Util', UtilService);
 
 })();

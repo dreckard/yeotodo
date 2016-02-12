@@ -14,7 +14,7 @@ class AdminController {
   }
 }
 
-angular.module('adsProgrammingAssignmentApp.admin')
+angular.module('yeoTodoApp.admin')
   .controller('AdminController', AdminController);
 
 })();

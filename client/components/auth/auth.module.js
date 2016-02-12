@@ -1,8 +1,8 @@
 'use strict';
 
-angular.module('adsProgrammingAssignmentApp.auth', [
-  'adsProgrammingAssignmentApp.constants',
-  'adsProgrammingAssignmentApp.util',
+angular.module('yeoTodoApp.auth', [
+  'yeoTodoApp.constants',
+  'yeoTodoApp.util',
   'ngCookies',
   'ui.router'
 ])

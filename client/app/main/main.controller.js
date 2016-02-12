@@ -149,7 +149,7 @@
 
     }
 
-    angular.module('adsProgrammingAssignmentApp')
+    angular.module('yeoTodoApp')
         .controller('MainController', MainController);
 
 })();
