@@ -1,8 +1,6 @@
 # yeotodo
 
-This project was generated with the [Angular Full-Stack Generator](https://github.com/DaftMonk/generator-angular-fullstack) version 3.3.0.
-
-## Getting Started
+A simple todo list web app. Generated with the [Angular Full-Stack Generator](https://github.com/DaftMonk/generator-angular-fullstack) version 3.3.0.
 
 ### Prerequisites
 
@@ -11,6 +9,7 @@ This project was generated with the [Angular Full-Stack Generator](https://githu
 - [Bower](bower.io) (`npm install --global bower`)
 - [Grunt](http://gruntjs.com/) (`npm install --global grunt-cli`)
 - [MongoDB](https://www.mongodb.org/) - Keep a running daemon with `mongod`
+- [Protractor](https://github.com/angular/protractor) - For end to end tests
 
 ### Developing
 
@@ -28,4 +27,6 @@ Run `grunt build` for building and `grunt serve` for preview.
 
 ## Testing
 
-Running `npm test` will run the unit tests with karma.
+Run `grunt test` to run unit and integration tests
+
+Run `grunt test:e2e` to run end to end tests with Protractor
