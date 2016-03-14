@@ -28,4 +28,5 @@ Run `grunt build` for building and `grunt serve` for preview.
 ## Testing
 
 Run `grunt test` to run unit and integration tests
+
 Run `grunt test:e2e` to run end to end tests with Protractor
