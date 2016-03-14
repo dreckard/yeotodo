@@ -19,7 +19,9 @@ A simple todo list web app. Generated with the [Angular Full-Stack Generator](ht
 
 3. Run `mongod` in a separate shell to keep an instance of the MongoDB Daemon running
 
-4. Run `grunt serve` to start the development server. It should automatically open the client in your browser when ready.
+4. Run `grunt serve` to start the development server.
+
+5. Navigate your browser to localhost:9000
 
 ## Build & development
 
